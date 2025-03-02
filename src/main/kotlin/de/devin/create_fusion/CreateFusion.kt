@@ -2,6 +2,7 @@ package de.devin.create_fusion
 
 import com.simibubi.create.foundation.data.CreateRegistrate
 import de.devin.create_fusion.block.ModBlocks
+import de.devin.create_fusion.item.AllItems
 import net.minecraft.client.Minecraft
 import net.neoforged.bus.api.SubscribeEvent
 import net.neoforged.fml.common.EventBusSubscriber
@@ -35,8 +36,8 @@ object CreateFusion {
         LOGGER.log(Level.INFO, "Hello world!")
 
         // Register the KDeferredRegister to the mod-specific event bus
-        ModBlocks.REGISTRY.register(MOD_BUS)
 
+        REGISTRATE.registerEventListeners(MOD_BUS)
 
         val obj = runForDist(clientTarget = {
             MOD_BUS.addListener(::onClientSetup)
@@ -46,8 +47,12 @@ object CreateFusion {
             "test"
         })
 
+        AllItems
+
         println(obj)
     }
+
+
 
     /**
      * This is used for initializing client specific
