@@ -1,7 +1,7 @@
 package de.devin.create_fusion
 
 import com.simibubi.create.foundation.data.CreateRegistrate
-import de.devin.create_fusion.block.ModBlocks
+import de.devin.create_fusion.block.AllBlocks
 import de.devin.create_fusion.item.AllItems
 import net.minecraft.client.Minecraft
 import net.neoforged.bus.api.SubscribeEvent
@@ -48,6 +48,7 @@ object CreateFusion {
         })
 
         AllItems
+        AllBlocks
 
         println(obj)
     }

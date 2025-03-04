@@ -13,7 +13,7 @@ object AllItems {
     }
 
     val CARDBOARD: ItemEntry<Item> = CreateFusion.REGISTRATE.item<Item>(
-        "hurensohn", ::Item
+        "myitem", ::Item
     )
         .properties { it.stacksTo(16) }
         .register()

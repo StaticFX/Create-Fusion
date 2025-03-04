@@ -1,5 +1,5 @@
 {
   "itemGroup.create_fusion": "Example Mod Tab",
-  "block.create_fusion.example_block": "Example Block",
-  "item.create_fusion.hurensohn": "Huren Item"
+  "item.create_fusion.hurensohn": "My Item",
+  "block.create_fusion.myblock": "My block"
 }
