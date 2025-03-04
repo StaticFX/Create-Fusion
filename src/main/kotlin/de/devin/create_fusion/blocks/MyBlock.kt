@@ -1,4 +1,4 @@
-package de.devin.create_fusion.block
+package de.devin.create_fusion.blocks
 
 import net.minecraft.world.level.block.Block
 

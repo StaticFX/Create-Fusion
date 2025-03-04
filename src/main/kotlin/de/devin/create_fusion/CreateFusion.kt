@@ -1,15 +1,21 @@
 package de.devin.create_fusion
 
+import com.simibubi.create.Create
 import com.simibubi.create.foundation.data.CreateRegistrate
-import de.devin.create_fusion.block.AllBlocks
-import de.devin.create_fusion.item.AllItems
+import de.devin.create_fusion.blocks.AllBlocks
+import de.devin.create_fusion.datagen.CreateFusionDatagen
+import de.devin.create_fusion.items.AllItems
+import de.devin.create_fusion.tabs.AllCreativeModeTabs
 import net.minecraft.client.Minecraft
+import net.minecraft.resources.ResourceLocation
 import net.neoforged.bus.api.SubscribeEvent
 import net.neoforged.fml.common.EventBusSubscriber
 import net.neoforged.fml.common.Mod
 import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent
 import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent
 import net.neoforged.fml.event.lifecycle.FMLDedicatedServerSetupEvent
+import net.neoforged.neoforge.common.NeoForge
+import net.neoforged.neoforge.data.event.GatherDataEvent
 import org.apache.logging.log4j.Level
 import org.apache.logging.log4j.LogManager
 import org.apache.logging.log4j.Logger
@@ -37,7 +43,10 @@ object CreateFusion {
 
         // Register the KDeferredRegister to the mod-specific event bus
 
+        NeoForge.EVENT_BUS.register(this)
         REGISTRATE.registerEventListeners(MOD_BUS)
+
+        MOD_BUS.addListener<GatherDataEvent> { CreateFusionDatagen.gatherData(it) }
 
         val obj = runForDist(clientTarget = {
             MOD_BUS.addListener(::onClientSetup)
@@ -47,13 +56,14 @@ object CreateFusion {
             "test"
         })
 
+        AllCreativeModeTabs
         AllItems
         AllBlocks
-
-        println(obj)
     }
 
-
+    fun asResource(path: String): ResourceLocation {
+        return ResourceLocation.fromNamespaceAndPath(ID, path)
+    }
 
     /**
      * This is used for initializing client specific

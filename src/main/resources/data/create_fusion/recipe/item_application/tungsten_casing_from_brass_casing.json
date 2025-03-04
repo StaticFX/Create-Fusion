@@ -1,0 +1,18 @@
+{
+  "type": "create:item_application",
+  "ingredients": [
+    {
+      "tag": "c:stripped_logs"
+    },
+    {
+      "item": "create_fusion:tungsten_alloy"
+    }
+  ],
+  "results": [
+    {
+      "item": {
+        "id": "create_fusion:tungsten_casing"
+      }
+    }
+  ]
+}
