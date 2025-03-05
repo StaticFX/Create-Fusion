@@ -18,7 +18,6 @@ object CreateFusionDatagen {
         lookupProvider = generatedEntriesProvider.registryProvider
         generator.addProvider(event.includeServer(), generatedEntriesProvider)
 
-
         ProcessingRecipeGen.registerAll(generator, output, lookupProvider)
 
         event.generator.addProvider(

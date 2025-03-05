@@ -14,10 +14,6 @@ import net.minecraft.world.level.material.MapColor
 
 object AllBlocks {
 
-    val MYBLOCK = CreateFusion.REGISTRATE.block<MyBlock>("myblock", ::MyBlock)
-        .initialProperties { Blocks.STONE }
-        .simpleItem()
-        .register()
 
 
     val TUNGSTEN_CASING: BlockEntry<CasingBlock> = CreateFusion.REGISTRATE.block<CasingBlock>(
