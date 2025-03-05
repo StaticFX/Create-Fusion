@@ -21,34 +21,43 @@ open class ItemApplicationRecipeGen(generator: PackOutput,
 ) : ProcessingRecipeGen(generator, registries) {
 
 
-    var TUNGSTEN: GeneratedRecipe = woodCasing(
+    var TUNGSTEN: GeneratedRecipe = fromBrassCasing(
         "tungsten",
         { AllItems.TUNGSTEN_INGOT.get() },
         { AllBlocks.TUNGSTEN_CASING.get() })
+
+
+    fun fromBrassCasing(type: String, ingrident: Supplier<ItemLike>, output: Supplier<ItemLike>): GeneratedRecipe =
+        brassCasingIngredient(type, { Ingredient.of(ingrident.get()) }, output)
 
     private fun woodCasing(
         type: String,
         ingredient: Supplier<ItemLike>,
         output: Supplier<ItemLike>
     ): GeneratedRecipe {
-        CreateFusion.LOGGER.info("Creating wood casing recipe")
         return woodCasingIngredient(type, { Ingredient.of(ingredient.get()) }, output)
     }
+
+    private fun brassCasingIngredient(type: String, ingredient: Supplier<Ingredient>, output: Supplier<ItemLike>): GeneratedRecipe {
+        return create(CreateFusion.asResource("${type}_casing_from_brass_casing")) { b: ProcessingRecipeBuilder<ProcessingRecipe<*>?> ->
+            b.require(com.simibubi.create.AllBlocks.BRASS_CASING.get())
+                .require(ingredient.get())
+                .output(output.get())
+        }
+    }
+
 
     fun woodCasingIngredient(
         type: String, ingredient: Supplier<Ingredient>,
         output: Supplier<ItemLike>
     ): GeneratedRecipe {
-        create(
-            type + "_casing_from_log",
-            UnaryOperator { b: ProcessingRecipeBuilder<ProcessingRecipe<*>?> ->
-                b.require(Tags.Items.STRIPPED_LOGS)
-                    .require(ingredient.get())
-                    .output(output.get())
-            })
-        return create(
-            type + "_casing_from_wood"
-        ) { b: ProcessingRecipeBuilder<ProcessingRecipe<*>?> ->
+        create(CreateFusion.asResource(type + "_casing_from_log")) { b: ProcessingRecipeBuilder<ProcessingRecipe<*>?> ->
+            b.require(Tags.Items.STRIPPED_LOGS)
+                .require(ingredient.get())
+                .output(output.get())
+        }
+
+        return create(CreateFusion.asResource(type + "_casing_from_wood")) { b: ProcessingRecipeBuilder<ProcessingRecipe<*>?> ->
             b.require(Tags.Items.STRIPPED_WOODS)
                 .require(ingredient.get())
                 .output(output.get())

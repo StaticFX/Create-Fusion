@@ -34,7 +34,7 @@ object CreateFusion {
 
     const val ID = "create_fusion"
 
-    val REGISTRATE = CreateRegistrate.create(ID)
+    val REGISTRATE: CreateRegistrate = CreateRegistrate.create(ID)
 
     // the logger for our mod
     val LOGGER: Logger = LogManager.getLogger(ID)
@@ -42,11 +42,11 @@ object CreateFusion {
     init {
         REGISTRATE.registerEventListeners(MOD_BUS)
 
-        MOD_BUS.addListener<GatherDataEvent> { CreateFusionDatagen.gatherData(it) }
-
         AllCreativeModeTabs
         AllItems
         AllBlocks
+
+        MOD_BUS.addListener<GatherDataEvent> { CreateFusionDatagen.gatherData(it) }
 
 //        val obj = runForDist(clientTarget = {
 //            MOD_BUS.addListener(::onClientSetup)

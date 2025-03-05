@@ -1,7 +1,5 @@
 package de.devin.create_fusion.datagen
 
-import com.simibubi.create.Create
-import com.simibubi.create.infrastructure.data.GeneratedEntriesProvider
 import com.tterrag.registrate.providers.RegistrateDataProvider
 import de.devin.create_fusion.CreateFusion
 import de.devin.create_fusion.recipes.ProcessingRecipeGen
@@ -18,15 +16,14 @@ object CreateFusionDatagen {
         var lookupProvider = event.lookupProvider
         val generatedEntriesProvider = GeneratedEntriesProvider(output, lookupProvider)
         lookupProvider = generatedEntriesProvider.registryProvider
+        generator.addProvider(event.includeServer(), generatedEntriesProvider)
 
 
         ProcessingRecipeGen.registerAll(generator, output, lookupProvider)
 
-
         event.generator.addProvider(
             true,
-            CreateFusion.REGISTRATE.setDataProvider(RegistrateDataProvider(Create.REGISTRATE, Create.ID, event))
+            CreateFusion.REGISTRATE.setDataProvider(RegistrateDataProvider(CreateFusion.REGISTRATE, CreateFusion.ID, event))
         )
-
     }
 }
