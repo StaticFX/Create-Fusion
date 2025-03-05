@@ -4,6 +4,7 @@ import com.simibubi.create.AllRecipeTypes
 import com.simibubi.create.content.processing.recipe.ProcessingRecipe
 import com.simibubi.create.content.processing.recipe.ProcessingRecipeBuilder
 import com.simibubi.create.foundation.recipe.IRecipeTypeInfo
+import de.devin.create_fusion.CreateFusion
 import de.devin.create_fusion.blocks.AllBlocks
 import de.devin.create_fusion.items.AllItems
 import net.minecraft.core.HolderLookup
@@ -25,14 +26,13 @@ open class ItemApplicationRecipeGen(generator: PackOutput,
         { AllItems.TUNGSTEN_INGOT.get() },
         { AllBlocks.TUNGSTEN_CASING.get() })
 
-
-
-    protected fun woodCasing(
+    private fun woodCasing(
         type: String,
         ingredient: Supplier<ItemLike>,
         output: Supplier<ItemLike>
     ): GeneratedRecipe {
-        return woodCasingIngredient(type, Supplier<Ingredient> { Ingredient.of(ingredient.get()) }, output)
+        CreateFusion.LOGGER.info("Creating wood casing recipe")
+        return woodCasingIngredient(type, { Ingredient.of(ingredient.get()) }, output)
     }
 
     fun woodCasingIngredient(
@@ -56,6 +56,4 @@ open class ItemApplicationRecipeGen(generator: PackOutput,
     }
 
     override fun getRecipeType(): IRecipeTypeInfo = AllRecipeTypes.ITEM_APPLICATION
-
-
 }

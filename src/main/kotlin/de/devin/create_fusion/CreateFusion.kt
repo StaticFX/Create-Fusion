@@ -19,6 +19,7 @@ import net.neoforged.neoforge.data.event.GatherDataEvent
 import org.apache.logging.log4j.Level
 import org.apache.logging.log4j.LogManager
 import org.apache.logging.log4j.Logger
+import thedarkcolour.kotlinforforge.neoforge.forge.FORGE_BUS
 import thedarkcolour.kotlinforforge.neoforge.forge.MOD_BUS
 import thedarkcolour.kotlinforforge.neoforge.forge.runForDist
 
@@ -39,26 +40,21 @@ object CreateFusion {
     val LOGGER: Logger = LogManager.getLogger(ID)
 
     init {
-        LOGGER.log(Level.INFO, "Hello world!")
-
-        // Register the KDeferredRegister to the mod-specific event bus
-
-        NeoForge.EVENT_BUS.register(this)
         REGISTRATE.registerEventListeners(MOD_BUS)
 
         MOD_BUS.addListener<GatherDataEvent> { CreateFusionDatagen.gatherData(it) }
 
-        val obj = runForDist(clientTarget = {
-            MOD_BUS.addListener(::onClientSetup)
-            Minecraft.getInstance()
-        }, serverTarget = {
-            MOD_BUS.addListener(::onServerSetup)
-            "test"
-        })
-
         AllCreativeModeTabs
         AllItems
         AllBlocks
+
+//        val obj = runForDist(clientTarget = {
+//            MOD_BUS.addListener(::onClientSetup)
+//            Minecraft.getInstance()
+//        }, serverTarget = {
+//            MOD_BUS.addListener(::onServerSetup)
+//            "test"
+//        })
     }
 
     fun asResource(path: String): ResourceLocation {

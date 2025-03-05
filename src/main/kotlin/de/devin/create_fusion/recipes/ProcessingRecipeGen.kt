@@ -9,7 +9,9 @@ import com.simibubi.create.foundation.data.recipe.CreateRecipeProvider.Generated
 import com.simibubi.create.foundation.recipe.IRecipeTypeInfo
 import net.createmod.catnip.registry.RegisteredObjectsHelper
 import net.minecraft.core.HolderLookup
+import net.minecraft.data.CachedOutput
 import net.minecraft.data.DataGenerator
+import net.minecraft.data.DataProvider
 import net.minecraft.data.PackOutput
 import net.minecraft.data.recipes.RecipeOutput
 import net.minecraft.resources.ResourceLocation
@@ -20,14 +22,23 @@ import java.util.function.Supplier
 import java.util.function.UnaryOperator
 
 abstract class ProcessingRecipeGen(generator: PackOutput, registries: CompletableFuture<HolderLookup.Provider>?): CreateRecipeProvider(generator, registries) {
-
-
     companion object {
-        val generators = mutableListOf<ProcessingRecipeGen>()
-
+        private val generators = mutableListOf<ProcessingRecipeGen>()
 
         fun registerAll(gen: DataGenerator,output: PackOutput, registries: CompletableFuture<HolderLookup.Provider>) {
             generators += ItemApplicationRecipeGen(output, registries)
+
+            gen.addProvider(true, object : DataProvider {
+                override fun getName(): String {
+                    return "Create fusion's Processing Recipes"
+                }
+
+                override fun run(dc: CachedOutput): CompletableFuture<*> {
+                    return CompletableFuture.allOf(
+                        *generators.map { gen -> gen.run(dc) }.toTypedArray()
+                    )
+                }
+            })
         }
     }
 
